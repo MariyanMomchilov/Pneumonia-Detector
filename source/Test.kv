@@ -1,0 +1,215 @@
+
+StateMachine:
+    current:'menu'
+
+<StateMachine>:
+    MenuScreen:
+    SettingsScreen:
+    RunDemoScreen:
+
+<Button>:
+    font_size: 20
+    color: 0,0,0,1
+    size_hint: 0.25,0.15
+
+<MenuScreen>:
+    name: 'menu'
+    FloatLayout:
+        canvas.before:
+            Rectangle:
+                id: backgr3
+                pos: self.pos
+                size: self.size
+                source: 'Asset 13.png'
+
+
+        Image:                              #put the logo in the corect position
+            id: imageWidget
+            source: 'Logo 2.png'
+            size_hint: 0.2, 0.2
+            pos_hint: {"x":0.015,"y":0.779}
+            canvas.before:
+                PushMatrix
+                Scale:
+                    x: 1.13
+                    y: 1.13
+                    origin: self.center
+            canvas.after:
+                PopMatrix
+        
+        Image:                              #put the title in the corect position
+            id: imageWidget
+            source: 'TitleEn.png' if app.language == 'EN' else 'BgTitle.png'
+            size_hint: 0.5, 0.3
+            pos_hint: {"x":0.245,"y":0.73}
+            canvas.before:
+                PushMatrix
+                Scale:
+                    x: 1.2
+                    y: 1.2
+                    origin: self.center
+            canvas.after:
+                PopMatrix
+
+        Button:                             #makes RunDemo button
+            id: run
+            border: 0, -15, 0, -15
+            background_normal: 'BtnDemo.png' if app.language == 'EN' else 'BgDemo.png'  
+            background_down: 'BtnColour.png'
+            pos_hint:{"x":0.05,"y":0.365}
+            on_release: root.manager.current = 'run'
+
+        Button:                             #makes Setting button
+            id: setts
+            border: 0, -15, 0, -15
+            background_normal: 'BtnSett.png' if app.language == 'EN' else 'BgSettings.png'
+            background_down: 'BtnColour.png'
+            pos_hint:{"x":0.375,"y":0.365}
+            on_release: root.manager.current = "settings"
+            
+
+        Button:                             #makes Exit button
+            id: exit
+            border: 0, -15, 0, -15
+            background_normal: 'BtnExit.png' if app.language == 'EN' else 'BgExit.png'
+            pos_hint:{"x":0.7,"y":0.365}
+            on_press: root.closeapp()
+        
+
+
+<SettingsScreen>:
+    name: 'settings'
+    FloatLayout:
+        canvas.before:
+            Rectangle:                      #makes background
+                id: backgr2
+                pos: self.pos
+                size: self.size
+                source: 'BckgBoxNew.png'
+
+        Image:                              #put the logo in the corect position
+            id: imageWidget
+            source: 'Logo 2.png'
+            size_hint: 0.2, 0.2
+            pos_hint: {"x":-0.0225,"y":0.779}
+            canvas.before:
+                PushMatrix
+                Scale:
+                    x: 1.0
+                    y: 1.0
+                    origin: self.center
+            canvas.after:
+                PopMatrix
+
+        Button:                             #makes Back button
+            id:back1
+            border: 0, 0, 0, 0
+            background_normal: 'BtnBack.png' if app.language == 'EN' else 'BgBack.png'
+            background_down: 'BtnColour.png'
+            pos_hint:{"x":0.475,"y":0.175}
+            size_hint: 0.23,0.12
+            on_release: root.manager.current = 'menu'
+
+        ToggleButton:                       #makes button for fullscreen
+            border: 0, 0, 0, 0
+            background_normal: 'BtnFull.png' if app.language == 'EN' else 'BgFull.png'     
+            background_down: 'BtnColour.png'      
+            group: 'scr'
+            on_state: root.fullscre()
+            pos_hint:{"x":0.475,"y":0.525}
+            size_hint: 0.23,0.12
+
+        ToggleButton:                       #makes button for small screen
+            border: 0, 0, 0, 0
+            background_normal: 'BtnScreen.png' if app.language == 'EN' else 'BgScreen.png' 
+            on_state: root.smallscreen()          
+            group: 'scr'
+            pos_hint:{"x":0.475,"y":0.350}
+            size_hint: 0.23,0.12
+
+        Button:                             #makes button for languages
+            id: language
+            border: 0, 0, 0, 0
+            background_normal: 'BgBtn.png' if app.language == 'EN' else 'BtnEng.png'
+            background_down: 'BtnColour.png'
+            pos_hint:{"x":0.475,"y":0.7}
+            size_hint: 0.23,0.12
+            on_release: app.switch_language()
+
+
+<RunDemoScreen>:
+    name: 'run'
+    FloatLayout:
+        canvas.before:
+            Rectangle:                     #import screen background image
+                id: backgr
+                pos: self.pos
+                size: self.size
+                source: 'BckgDemo.png'
+        
+        Image:                              #put the logo in the corect position
+            id: imageWidgetl
+            source: 'Logo 2.png'
+            size_hint: 0.2, 0.2
+            pos_hint: {"x":0.035,"y":0.779}  
+            canvas.before:
+                PushMatrix
+                Scale:
+                    x: 1.0
+                    y: 1.0
+                    origin: self.center
+            canvas.after:
+                PopMatrix
+
+        Button:                              #makes Test button
+            id: test
+            border: 0, 0, 0, 0
+            background_normal: 'BtnTest1.png' if app.language == 'EN' else 'BgTest1.png'
+            background_down: 'BtnColour.png'
+            pos_hint:{"x":0.0175,"y":0.415}
+            size_hint: 0.23,0.12
+            on_release: root.make_cam()
+            on_press: root.test()
+
+        Button:                              #makes File button
+            id: file
+            border: 0, 0, 0, 0
+            background_normal: 'BtnFile1.png' if app.language == 'EN' else 'BgFile1.png'
+            background_down: 'BtnColour.png'
+            pos_hint:{"x":0.0175,"y":0.585}
+            size_hint: 0.23,0.12
+            on_press: root.file_dialog()
+
+        Button:                              #makes Back button
+            id: back2
+            border: 0, 0, 0, 0
+            background_normal: 'BtnBack1.png' if app.language == 'EN' else 'BgBtnBack1.png'
+            background_down: 'BtnColour.png'
+            pos_hint:{"x":0.0175,"y":0.25}
+            size_hint: 0.23,0.12
+            on_release: root.manager.current = 'menu'
+
+       
+        Image:                              #makes Result bar
+            id: resbar
+            source: 'ResBar.png' if app.language == 'EN' else 'BgResBar.png'
+            size_hint: 0.63, 0.4
+            allow_stretch: True
+            pos_hint: {"x":0.3,"y":0.03}
+            
+        Label:                              #print network decision
+            id: result
+            text: ''
+            pos_hint: {"x":0.45,"y":0.012}
+            size_hint: 0.3,0.2
+            color: 0.1,0.6,1,1
+            font_size: 50
+
+
+        
+        Image:                              #screen for X-ray image
+            id: imageWidget
+            source: 'ImgBck.png'
+            size_hint: 0.61, 0.61
+            pos_hint: {"x":0.31,"y":0.34}
+            allow_stretch: True
